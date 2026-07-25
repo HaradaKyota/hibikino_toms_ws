@@ -125,10 +125,10 @@ ros2 launch harvest_task_pkg crawler_auto_harvest.launch.py
 ```
 ros2 launch my_nav_package navigation.launch.py
 ```
-rvizの上部メニューにある「2D Pose Estimate」をクリック
-↓
-マップ上でロボットの姿勢を設定（設定するとリアルタイムのLiDARセンサ情報がrviz上に出力される）
-↓
-rvizの上部メニューにある「2D Goal Pose」をクリック
-↓
+rvizの上部メニューにある「2D Pose Estimate」をクリック  
+↓  
+マップ上でロボットの姿勢を設定（設定するとリアルタイムのLiDARセンサ情報がrviz上に出力される）  
+↓  
+rvizの上部メニューにある「2D Goal Pose」をクリック  
+↓  
 マップ上でゴールのロボット姿勢を設定（設定すると移動経路を表す緑色の線が出力されて移動が開始する）
