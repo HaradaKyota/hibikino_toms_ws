@@ -88,3 +88,38 @@ ros2 service call /harvest_tomato toms_msg/srv/HarvestTomato "{}"
 pkill -9 -f cam_pub_service
 pkill -9 -f vision_service
 ```
+
+# 自律移動実行手順（cdやsourceは割愛） #
+## SLAM地図作成 ##
+クローラを起動（teleopで移動可能）
+```
+ros2 launch cart_controller_pkg crawler_control.launch.py
+```
+LiDARを起動
+```
+ros2 launch livox_ros_driver2 rviz_MID360_launch.py
+```
+以下のコマンドによりrvizが起動する
+```
+ros2 launch my_nav_package slam.launch.py
+```
+クローラをteleopで移動させると、地図が生成され、以下のコマンドで保存（pgmとyamlが指定のパスに保存される）
+```
+ros2 run nav2_map_server map_saver_cli -f 保存先のパス
+```
+## 保存した地図を用いてNavigationで自律移動 ##
+harvest launchを起動
+```
+ros2 launch harvest_task_pkg crawler_auto_harvest.launch.py
+```
+Navigationを起動（マップのパスは/home/ylab/hibikino_toms_ws/src/my_nav_package/maps/maps.yamlで指定している）
+```
+ros2 launch my_nav_package navigation.launch.py
+```
+rvizの上部メニューにある「2D Pose Estimate」をクリック
+↓
+マップ上でロボットの姿勢を設定（設定するとリアルタイムのLiDARセンサ情報がrviz上に出力される）
+↓
+rvizの上部メニューにある「2D Goal Pose」をクリック
+↓
+マップ上でゴールのロボット姿勢を設定（設定すると移動経路を表す緑色の線が出力されて移動が開始する）
