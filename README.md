@@ -99,7 +99,7 @@ LiDARを起動
 ```
 ros2 launch livox_ros_driver2 rviz_MID360_launch.py
 ```
-以下のコマンドによりrvizが起動する
+以下のslam起動コマンドによりrvizが起動する
 ```
 ros2 launch my_nav_package slam.launch.py
 ```
@@ -107,12 +107,21 @@ ros2 launch my_nav_package slam.launch.py
 ```
 ros2 run nav2_map_server map_saver_cli -f 保存先のパス
 ```
+地図保存後は、slamのlaunchは停止して良い
 ## 保存した地図を用いてNavigationで自律移動 ##
+クローラを起動（teleopで移動可能）（地図作成時から起動している場合は再度起動したままで良い）
+```
+ros2 launch cart_controller_pkg crawler_control.launch.py
+```
+LiDARを起動（地図作成時から起動している場合は再度起動したままで良い）
+```
+ros2 launch livox_ros_driver2 rviz_MID360_launch.py
+```
 harvest launchを起動
 ```
 ros2 launch harvest_task_pkg crawler_auto_harvest.launch.py
 ```
-Navigationを起動（マップのパスは/home/ylab/hibikino_toms_ws/src/my_nav_package/maps/maps.yamlで指定している）
+以下のコマンドでNavigationを起動すると、rvizが起動してslamで保存したマップが出力される（マップのパスは/home/ylab/hibikino_toms_ws/src/my_nav_package/maps/maps.yamlで指定している）
 ```
 ros2 launch my_nav_package navigation.launch.py
 ```
